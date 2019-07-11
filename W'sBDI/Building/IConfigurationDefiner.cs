@@ -5,10 +5,11 @@ using W_sBDI.Core;
 
 namespace W_sBDI.Building
 {
-    public interface IConfigurationDefiner
+    internal interface IConfigurationDefiner
     {
-        TypesDefineWrapper StructuringStorageTypes();
-        Type Source { get; set; }
-        List<Type> Implementors { get; set; }
+        void AddRegisterType(Type type);
+        void AddImplementorTypes(IList<Type> type);
+        LifeTimeManagement LifeTimeManagement { get; set; }
+        object GetInstance();
     }
 }

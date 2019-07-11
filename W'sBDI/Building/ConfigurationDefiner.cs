@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using W_sBDI.Core;
 
@@ -8,27 +9,35 @@ namespace W_sBDI.Building
     internal class ConfigurationDefiner : IConfigurationDefiner
     {
 
-        public Type Source { get; set; }
-        public List<Type> Implementors { get; set; }
+        private Type _registerType;
+        private List<Type> _implementorTypes;
+        public LifeTimeManagement LifeTimeManagement { get; set; }
 
-        public ConfigurationDefiner() : this(new ConfigProperties())
+        internal ConfigurationDefiner() : this(new ConfigProperties())
         { }
 
-        public ConfigurationDefiner(IConfigProperties properties)
+        internal ConfigurationDefiner(IConfigProperties properties)
         {
             properties = properties ?? throw new NullReferenceException();
+            _implementorTypes = new List<Type>();
         }
 
-        public TypesDefineWrapper StructuringStorageTypes()
+        public void AddRegisterType(Type type)
         {
-            var typesDefine = new Dictionary<SourceType, DefineTypes>();
-            var source = new SourceType();
-            source.Type = Source;
-            var define = new DefineTypes(Implementors.Count);
-            define.Types = Implementors.ToArray();
-            typesDefine.Add(source, define);
+            _registerType = type;
+        }
 
-            return new TypesDefineWrapper(typesDefine);
+        public void AddImplementorTypes(IList<Type> type)
+        {
+            _implementorTypes.AddRange(type);
+        }
+
+        public object GetInstance()
+        {
+            Object resolverInst = this.LifeTimeManagement.Instance;
+            if(resolverInst == null) resolverInst = Activator.CreateInstance(_implementorTypes.First());
+            this.LifeTimeManagement.Instance = resolverInst;
+            return resolverInst;
         }
     }
 }

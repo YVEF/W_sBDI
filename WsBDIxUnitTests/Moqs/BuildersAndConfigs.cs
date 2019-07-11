@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace W_sBDITest1.Moqs
+namespace WsBDIxUnitTests.Moqs
 {
     interface IBaseObject
     {

@@ -42,6 +42,19 @@ namespace WsBDIxUnitTests
             Assert.Equal(baseObject, newObj);
         }
 
+        [Fact]
+        public void RegisterAndResolveTwoTypes()
+        {
+            var newBuilder = new ContainerBuilder();
+            newBuilder.DefineType<IObj>().As<Obj>();
+            newBuilder.DefineType<IObj2>().As<Obj2>();
+            var cont = newBuilder.Build();
+            var obj2 = cont.Resolve<IObj2>();
+            var obj1 = cont.Resolve<IObj>();
+            Assert.Equal("It'm Obj", obj1.Value);
+            Assert.Equal("It'm Obj2", obj2.Value);
+        }
+
 
     }
 }

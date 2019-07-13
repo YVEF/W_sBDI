@@ -7,7 +7,7 @@ namespace W_sBDI.Building
 {
     internal interface IConfigurationDefiner
     {
-        void AddRegisterType(Type type);
+        //void AddRegisterType(Type type);
         void AddImplementorTypes(IList<Type> type);
         LifeTimeManagement LifeTimeManagement { get; set; }
         object GetInstance();

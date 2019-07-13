@@ -9,7 +9,7 @@ namespace W_sBDI.Building
     internal class ConfigurationDefiner : IConfigurationDefiner
     {
 
-        private Type _registerType;
+        //private Type _registerType;
         private List<Type> _implementorTypes;
         public LifeTimeManagement LifeTimeManagement { get; set; }
 
@@ -22,10 +22,10 @@ namespace W_sBDI.Building
             _implementorTypes = new List<Type>();
         }
 
-        public void AddRegisterType(Type type)
-        {
-            _registerType = type;
-        }
+        //public void AddRegisterType(Type type)
+        //{
+        //    _registerType = type;
+        //}
 
         public void AddImplementorTypes(IList<Type> type)
         {

@@ -8,19 +8,19 @@ namespace W_sBDI.Core
 {
     internal class Container : IContainer
     {
-        private TypeManager _typeManager;
+        private Dictionary<Guid, TypeManager> _typeManagerList;
         private Dictionary<Type, Guid> _typeToGuid;
 
-        public Container(TypeManager typeManager, Dictionary<Type, Guid> typeToGuid)
+        public Container(Dictionary<Guid, TypeManager> typeManagerList, Dictionary<Type, Guid> typeToGuid)
         {
-            _typeManager = typeManager;
+            _typeManagerList = typeManagerList;
             _typeToGuid = typeToGuid;
         }
 
         public TAbstract Resolve<TAbstract>() where TAbstract : class
         {
             var guid = _typeToGuid[typeof(TAbstract)];
-            var result = _typeManager.GetObject(guid);
+            var result = _typeManagerList[guid].GetObject();
             return result as TAbstract;
         }
 

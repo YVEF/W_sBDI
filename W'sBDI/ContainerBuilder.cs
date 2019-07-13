@@ -7,19 +7,22 @@ namespace W_sBDI
 {
     public class ContainerBuilder
     {
-        internal TypeManager TypeManager { get; set; }
+        internal Dictionary<Guid, TypeManager> TypeManagerList { get; set; }
         internal Dictionary<Type, Guid> TypeToGuid { get; set; }
-        internal Guid guid { get; set; }
+        //internal Guid guid { get; set; }
 
         public ContainerBuilder()
         {
+            TypeManagerList = new Dictionary<Guid, TypeManager>();
             TypeToGuid = new Dictionary<Type, Guid>();
         }
 
         public IContainer Build()
         {
-            TypeManager.StructuringStorageTypes(guid);
-            return new Container(TypeManager, TypeToGuid);
+            foreach (var item in TypeManagerList.Values)
+                item.StructuringStorageTypes();
+            //TypeManagerList.StructuringStorageTypes(guid);
+            return new Container(TypeManagerList, TypeToGuid);
         }
 
         public IStartupConfigurationWrapper CreateConfigurationWrapper()

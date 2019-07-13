@@ -9,27 +9,43 @@ namespace W_sBDI
 {
     public static class BaseConfigurationExtension
     {
-        private static ContainerBuilder _builder;        
+        private static ContainerBuilder _builder;
+        private static TypeManager _currentManager;
 
         public static IStartupConfigurationWrapper DefineType<TRegister>(this ContainerBuilder builder)
         {
             _builder = builder;
-            _builder.TypeManager = new TypeManager();
-            _builder.TypeManager.AddTypeRegister(typeof(TRegister));
-            _builder.guid = Guid.NewGuid();
-            _builder.TypeToGuid.Add(typeof(TRegister), _builder.guid);
+            _currentManager = new TypeManager();
+            //_builder.TypeManagerList.Add(_currentManager);
+            //_builder.TypeManager = new TypeManager();
+            _currentManager.AddTypeRegister(typeof(TRegister));
+            var guid = Guid.NewGuid();
+            _builder.TypeManagerList.Add(guid, _currentManager);
+            _builder.TypeToGuid.Add(typeof(TRegister), guid);
             return _builder.CreateConfigurationWrapper();
         }
 
         public static IStartupConfigurationWrapper As<TImplementor>(this IStartupConfigurationWrapper manager)
         {
-            _builder.TypeManager.AddTypeImplementor(typeof(TImplementor));
+            _currentManager.AddTypeImplementor(typeof(TImplementor));
             return manager;
         }
 
         public static IStartupConfigurationWrapper SingleInstance(this IStartupConfigurationWrapper manager)
         {
-            _builder.TypeManager.AddLifeStyle(LyfeStyle.SingleInstance);
+            _currentManager.AddLifeStyle(LyfeStyle.SingleInstance);
+            return manager;
+        }
+
+        public static IStartupConfigurationWrapper PerRequest(this IStartupConfigurationWrapper manager)
+        {
+            _currentManager.AddLifeStyle(LyfeStyle.PerRequest);
+            return manager;
+        }
+
+        public static IStartupConfigurationWrapper PerThread(this IStartupConfigurationWrapper manager)
+        {
+            _currentManager.AddLifeStyle(LyfeStyle.PerThread);
             return manager;
         }
     }

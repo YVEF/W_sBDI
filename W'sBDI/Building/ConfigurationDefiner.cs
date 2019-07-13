@@ -22,11 +22,6 @@ namespace W_sBDI.Building
             _implementorTypes = new List<Type>();
         }
 
-        //public void AddRegisterType(Type type)
-        //{
-        //    _registerType = type;
-        //}
-
         public void AddImplementorTypes(IList<Type> type)
         {
             _implementorTypes.AddRange(type);

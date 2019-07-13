@@ -16,8 +16,6 @@ namespace W_sBDI
         {
             _builder = builder;
             _currentManager = new TypeManager();
-            //_builder.TypeManagerList.Add(_currentManager);
-            //_builder.TypeManager = new TypeManager();
             _currentManager.AddTypeRegister(typeof(TRegister));
             var guid = Guid.NewGuid();
             _builder.TypeManagerList.Add(guid, _currentManager);

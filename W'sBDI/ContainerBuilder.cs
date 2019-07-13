@@ -9,7 +9,6 @@ namespace W_sBDI
     {
         internal Dictionary<Guid, TypeManager> TypeManagerList { get; set; }
         internal Dictionary<Type, Guid> TypeToGuid { get; set; }
-        //internal Guid guid { get; set; }
 
         public ContainerBuilder()
         {
@@ -21,7 +20,6 @@ namespace W_sBDI
         {
             foreach (var item in TypeManagerList.Values)
                 item.StructuringStorageTypes();
-            //TypeManagerList.StructuringStorageTypes(guid);
             return new Container(TypeManagerList, TypeToGuid);
         }
 

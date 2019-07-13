@@ -9,7 +9,6 @@ namespace W_sBDI.Building
     internal class TypeManager
     {
         internal IList<IConfigurationDefiner> ConfigurationDefiners { get; set; }
-        //private Type _tempRegisterType;
         private List<Type> _tempImplementorTypes;
         private LyfeStyle? _lyfeStyle;
         private Guid _startGuid;
@@ -23,11 +22,6 @@ namespace W_sBDI.Building
             _tempImplementorTypes = new List<Type>();
         }
 
-        internal void AddTypeRegister(Type tRegister)
-        {
-            //_tempRegisterType = tRegister;
-        }
-
         internal void AddTypeImplementor(Type tImpl)
         {
             _tempImplementorTypes.Add(tImpl);
@@ -38,16 +32,15 @@ namespace W_sBDI.Building
             if(_lyfeStyle == null) _lyfeStyle = lyfeStyle;
         }
 
-        public void StructuringStorageTypes(/*Guid guidRegister*/)
+        public void StructuringStorageTypes()
         {
             var config = new ConfigurationDefiner();
-            //config.AddRegisterType(_tempRegisterType);
             config.AddImplementorTypes(_tempImplementorTypes);       
             config.LifeTimeManagement = new LifeTimeManagement(_lyfeStyle);
             ConfigurationDefiners.Add(config);
         }
 
-        public object GetObject(/*Guid guid*/)
+        public object GetObject()
         {
             var c = ConfigurationDefiners.FirstOrDefault();
             return c.GetInstance();

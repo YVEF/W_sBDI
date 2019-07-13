@@ -18,8 +18,11 @@ namespace W_sBDI
 
         public IContainer Build()
         {
-            foreach (var item in TypeManagerList.Values)
-                item.StructuringStorageTypes();
+            foreach (var manager in TypeManagerList.Values)
+            {
+                manager.StructuringStorageTypes();
+                manager.CreateStartupInstance();
+            }                
             return new Container(TypeManagerList, TypeToGuid);
         }
 

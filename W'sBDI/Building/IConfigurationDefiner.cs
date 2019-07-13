@@ -10,5 +10,6 @@ namespace W_sBDI.Building
         void AddImplementorTypes(IList<Type> type);
         LifeTimeManagement LifeTimeManagement { get; set; }
         object GetInstance();
+        void StartupBuildingObject();
     }
 }

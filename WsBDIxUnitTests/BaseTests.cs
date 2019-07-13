@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using W_sBDI;
 using WsBDIxUnitTests.Moqs;
 using Xunit;
@@ -15,6 +16,7 @@ namespace WsBDIxUnitTests
         {
             builder = new ContainerBuilder();
             builder.DefineType<IBaseObject>().As<BaseObject>().SingleInstance();
+            builder.DefineType<IObjThread>().As<ObjThread>().PerThread();
             container = builder.Build();
             baseObject = container.Resolve<IBaseObject>();
         }
@@ -53,6 +55,22 @@ namespace WsBDIxUnitTests
             var obj1 = cont.Resolve<IObj>();
             Assert.Equal("It'm Obj", obj1.Value);
             Assert.Equal("It'm Obj2", obj2.Value);
+        }
+
+        [Fact]
+        public void ResolvePerThreadIsWorking()
+        {
+            IObjThread obj3 = null;
+            var obj1 = container.Resolve<IObjThread>();
+            var obj2 = container.Resolve<IObjThread>();
+            var thread = new Thread(() =>
+            {
+                obj3 = container.Resolve<IObjThread>();
+            });
+            thread.Start();
+            thread.Join();
+            Assert.Equal(obj1, obj2);
+            Assert.NotEqual(obj3, obj1);            
         }
 
 

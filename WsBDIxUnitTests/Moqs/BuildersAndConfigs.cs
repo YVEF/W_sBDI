@@ -34,4 +34,14 @@ namespace WsBDIxUnitTests.Moqs
     {
         public string Value { get => "It'm Obj2"; }
     }
+
+    interface IObjThread
+    {
+        string Value { get; }
+    }
+
+    class ObjThread : IObjThread
+    {
+        public string Value { get => "It'm ObjThread"; }
+    }
 }

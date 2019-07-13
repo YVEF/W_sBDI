@@ -8,8 +8,6 @@ namespace W_sBDI.Building
 {
     internal class ConfigurationDefiner : IConfigurationDefiner
     {
-
-        //private Type _registerType;
         private List<Type> _implementorTypes;
         public LifeTimeManagement LifeTimeManagement { get; set; }
 
@@ -25,14 +23,32 @@ namespace W_sBDI.Building
         public void AddImplementorTypes(IList<Type> type)
         {
             _implementorTypes.AddRange(type);
-        }
+        }        
 
         public object GetInstance()
         {
-            Object resolverInst = this.LifeTimeManagement.Instance;
-            if(resolverInst == null) resolverInst = Activator.CreateInstance(_implementorTypes.First());
-            this.LifeTimeManagement.Instance = resolverInst;
-            return resolverInst;
+            return _CreateInstance();
         }
+
+        public void StartupBuildingObject()
+        {
+            _CreateInstance();
+        }
+
+        #region private methods
+
+        private object _CreateInstance()
+        {
+            object result = this.LifeTimeManagement.Instance;
+            if (result == null)
+            {
+                result = Activator.CreateInstance(_implementorTypes.First());
+                this.LifeTimeManagement.Instance = result;
+            }                
+            return result;
+        }
+
+        #endregion
+
     }
 }

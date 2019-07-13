@@ -11,7 +11,6 @@ namespace W_sBDI.Building
         internal IList<IConfigurationDefiner> ConfigurationDefiners { get; set; }
         private List<Type> _tempImplementorTypes;
         private LyfeStyle? _lyfeStyle;
-        private Guid _startGuid;
 
         internal TypeManager() : this(new List<IConfigurationDefiner>())
         { }
@@ -38,12 +37,19 @@ namespace W_sBDI.Building
             config.AddImplementorTypes(_tempImplementorTypes);       
             config.LifeTimeManagement = new LifeTimeManagement(_lyfeStyle);
             ConfigurationDefiners.Add(config);
+            _tempImplementorTypes = null;
+        }
+
+        public void CreateStartupInstance()
+        {
+            var confDef = ConfigurationDefiners.FirstOrDefault();
+            confDef.StartupBuildingObject();
         }
 
         public object GetObject()
         {
-            var c = ConfigurationDefiners.FirstOrDefault();
-            return c.GetInstance();
+            var confDef = ConfigurationDefiners.FirstOrDefault();
+            return confDef.GetInstance();
         }
     }
 }

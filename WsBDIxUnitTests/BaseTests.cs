@@ -73,6 +73,33 @@ namespace WsBDIxUnitTests
             Assert.NotEqual(obj3, obj1);            
         }
 
+        [Fact]
+        public void DefineWithOneConstructorArguments()
+        {
+            var newBuilder = new ContainerBuilder();
+            newBuilder.DefineType<IMoqWithCtorArgs>().As<MoqWithCtorArgs>().WithConstructorArguments("value", "call the ctor");
+            var cont = newBuilder.Build();
+            var moq = cont.Resolve<IMoqWithCtorArgs>();
+            Assert.Equal("call the ctor", moq.Value);
+        }
+
+
+        //[Fact]
+        //public void MoreKindOfDefiners()
+        //{
+        //    var newBuilder = new ContainerBuilder();
+        //    newBuilder.Define<IObj2>().FindImplementor();
+        //    newBuilder.DefineType<IObj1>().As(t => new Obj1("Hi from obj1"));
+        //    var cont = newBuilder.Build();
+        //    var obj2 = cont.Resolve<IObj2>();
+        //    var obj1 = cont.Resolve<IObj1>();
+        //    var obj12 = cont.Resolve<IObj1>();
+        //    Assert.NotNull(obj1);
+        //    Assert.NotNull(obj2);
+        //    Assert.NotEqual(obj1, obj12);
+        //    Assert.Equal(obj1.Value, obj12.Value);
+        //}
+
 
     }
 }

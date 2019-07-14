@@ -10,8 +10,7 @@ namespace W_sBDI
     /// It's internal class for management lyfe cicle of registered types
     /// </summary>
     internal class LifeTimeManagement
-    {
-        
+    {        
         private readonly LyfeStyle _lyfeStyle;
         private object _instance;
         /// <summary>

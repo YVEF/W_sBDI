@@ -8,10 +8,10 @@ namespace W_sBDI.Core
 {
     internal class Container : IContainer
     {
-        private Dictionary<Guid, TypeManager> _typeManagerList;
+        private Dictionary<Guid, IBuilderManager> _typeManagerList;
         private Dictionary<Type, Guid> _typeToGuid;
 
-        public Container(Dictionary<Guid, TypeManager> typeManagerList, Dictionary<Type, Guid> typeToGuid)
+        public Container(Dictionary<Guid, IBuilderManager> typeManagerList, Dictionary<Type, Guid> typeToGuid)
         {
             _typeManagerList = typeManagerList;
             _typeToGuid = typeToGuid;

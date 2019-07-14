@@ -25,6 +25,18 @@ namespace WsBDIxUnitTests.Moqs
         public string Value { get => "It'm Obj"; }
     }
 
+    interface IObj1
+    {
+        string Value { get; set; }
+    }
+
+    class Obj1 : IObj1
+    {
+        public Obj1(string val) => Value = val;
+
+        public string Value { get; set; }
+    }
+
     interface IObj2
     {
         string Value { get; }
@@ -43,5 +55,16 @@ namespace WsBDIxUnitTests.Moqs
     class ObjThread : IObjThread
     {
         public string Value { get => "It'm ObjThread"; }
+    }
+
+    interface IMoqWithCtorArgs
+    {
+        string Value { get; set; }
+    }
+
+    class MoqWithCtorArgs : IMoqWithCtorArgs
+    {
+        public MoqWithCtorArgs(string value) => Value = value;
+        public string Value { get; set; }
     }
 }

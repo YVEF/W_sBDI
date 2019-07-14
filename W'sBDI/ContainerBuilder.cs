@@ -7,12 +7,12 @@ namespace W_sBDI
 {
     public class ContainerBuilder
     {
-        internal Dictionary<Guid, TypeManager> TypeManagerList { get; set; }
+        internal Dictionary<Guid, IBuilderManager> TypeManagerList { get; set; }
         internal Dictionary<Type, Guid> TypeToGuid { get; set; }
 
         public ContainerBuilder()
         {
-            TypeManagerList = new Dictionary<Guid, TypeManager>();
+            TypeManagerList = new Dictionary<Guid, IBuilderManager>();
             TypeToGuid = new Dictionary<Type, Guid>();
         }
 

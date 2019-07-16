@@ -84,22 +84,40 @@ namespace WsBDIxUnitTests
         }
 
 
-        //[Fact]
-        //public void MoreKindOfDefiners()
-        //{
-        //    var newBuilder = new ContainerBuilder();
-        //    newBuilder.Define<IObj2>().FindImplementor();
-        //    newBuilder.DefineType<IObj1>().As(t => new Obj1("Hi from obj1"));
-        //    var cont = newBuilder.Build();
-        //    var obj2 = cont.Resolve<IObj2>();
-        //    var obj1 = cont.Resolve<IObj1>();
-        //    var obj12 = cont.Resolve<IObj1>();
-        //    Assert.NotNull(obj1);
-        //    Assert.NotNull(obj2);
-        //    Assert.NotEqual(obj1, obj12);
-        //    Assert.Equal(obj1.Value, obj12.Value);
-        //}
+        [Fact]
+        public void AsDelegateDefiner()
+        {
+            var newBuilder = new ContainerBuilder();
+            newBuilder.DefineType<IObj1>().As(t => new Obj1("Hi from obj1"));
+            var cont = newBuilder.Build();
+            var obj1 = cont.Resolve<IObj1>();
+            var obj12 = cont.Resolve<IObj1>();
+            Assert.NotNull(obj1);            
+            Assert.NotEqual(obj1, obj12);
+            Assert.Equal(obj1.Value, obj12.Value);
+        }
 
+        [Fact]
+        public void AsSingletoneDelegateDefiner()
+        {
+            var newBuilder = new ContainerBuilder();
+            newBuilder.DefineType<IObj1>().As(t => new Obj1("Hi from obj1")).SingleInstance();
+            var cont = newBuilder.Build();
+            var obj1 = cont.Resolve<IObj1>();
+            var obj12 = cont.Resolve<IObj1>();
+            Assert.NotNull(obj1);
+            Assert.Equal(obj1, obj12);
+            Assert.Equal(obj1.Value, obj12.Value);
+        }
 
+        [Fact]
+        public void FindImplementorsIsWorking()
+        {
+            var newBuilder = new ContainerBuilder();
+            newBuilder.DefineType<IObj2>().FindImplementor();
+            var cont = newBuilder.Build();
+            var obj1 = cont.Resolve<IObj2>();
+            Assert.NotNull(obj1);
+        }
     }
 }

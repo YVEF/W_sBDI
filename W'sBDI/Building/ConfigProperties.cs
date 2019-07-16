@@ -8,6 +8,7 @@ namespace W_sBDI.Building
     {
         public Dictionary<string, object> CtorParams { get; set; }
         public Dictionary<string, object> PropertyParams { get; set; }
+        public object ExistingObject { get; set; }
 
         public ConfigProperties()
         {
